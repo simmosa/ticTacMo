@@ -17,7 +17,7 @@ The code was designed with scalabilty in mind. The game board is an array of cel
     - the likelyhood of being involved in a win scenario.
 
 Visual design of UI is an area I need to spend more time on.. I apear to have a technical aproach but lack some visual creativity. Here' a sketch of early ideas:
-![](images/ui_1.jpeg | width="100")
+![](images/ui_1.jpeg | width=100)
 
 ![](images/ui_2).jpeg)
 
