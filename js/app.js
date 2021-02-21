@@ -21,7 +21,6 @@ function cellClicked(event) {
             currentPlayerWins();
         } else if (checkDiagonals()) {
             currentPlayerWins();
-            console.log("diagonal win");
         }
     }
     
@@ -36,12 +35,12 @@ for (i = 0; i < cellDivs.length; i++) { //add event listeners to cells
 function placeAvatar(event) {
     // event.target.textContent = currentPlayer;
     if (currentPlayer === player1) {
-        var imgElement = document. createElement("img");
+        var imgElement = document.createElement("img");
         imgElement.src = "images/mo.gif";
         imgElement.classList.add("cell-avatar-class");
         event.target.append(imgElement);
     } else {
-        var imgElement = document. createElement("img");
+        var imgElement = document.createElement("img");
         imgElement.src = "images/mow.png";
         imgElement.classList.add("cell-avatar-class");
         event.target.append(imgElement);
@@ -143,17 +142,18 @@ function swapTurns() {
 var resetBtn = document.querySelector('.reset-btn');
 
 function resetGame() {
-    if (win === true) { // need to hide the message window
-        hideMessageDiv();
-    }
+    //in case reset is pressed while entering player names or after end of game.
+    hideMessageDiv();
+    hideEnterPlayerDiv();
+    
     gameIsLive = false;
     win = false;
     boardArray = [ [], [], [] ]; // resetting the record
     createGameBoard();
 
-    currentPlayer = player1;
     player1 = "Player 1";
     player2 = "Player 2";
+    currentPlayer = player1;
     displayPlayerNames()
     //resetting the UI
     var imgArray = document.querySelectorAll("img.cell-avatar-class")
@@ -185,6 +185,9 @@ playerBtn.addEventListener('click', showEnterPlayerDiv);
 function hideEnterPlayerDiv() {
     var enterNameDiv = document.querySelector('.enter-name-div');
     enterNameDiv.classList.add('hide-class');
+    
+    var playerInput = document.querySelector('.player-input');
+    playerInput.value = ""; // reset the placeholder.
 }
 
 var submitBtn = document.querySelector('.submit-btn');
@@ -199,14 +202,14 @@ function sumbit() { // also sets the gameIsLive = true
         playerNameH4.textContent = currentPlayer;
         displayPlayerNames();
         playerInput.value = "";
-    } else {
+    } else if (playerInput.value != player1) { // Names need to be unique.
         player2 = playerInput.value;
         currentPlayer = player1; //always start with player 1 on new game.
         playerInput.value = "";
         displayPlayerNames();
         hideEnterPlayerDiv();
+        gameIsLive = true;
     }
-    gameIsLive = true;
 }
 submitBtn.addEventListener('click', sumbit);
 
@@ -218,7 +221,7 @@ var player2 = "Player 2";
 var player1Score = 0;
 var player2Score = 0;
 
-var gameIsLive = false;
+var gameIsLive = false; // Used to freeze buttons from upsetting the game play.
 var win = false; // tracks the status of the game
 
 currentPlayer = player1;
@@ -242,8 +245,8 @@ var cell = {
     // xPos: 0,
     // yPos: 0,
     free: true,
-    potentialWin: false,
-    winCheck: function(){}
+    potentialWin: false, // was wanting to use this to help the an AI player
+    winCheck: function(){} // nice idea but didn't implement. 
 }
 
 // creating an empty game board
@@ -259,7 +262,9 @@ function createGameBoard() {
     }
 }
 
-createGameBoard();
-displayPlayerNames();
+// createGameBoard();
+// displayPlayerNames();
+
+resetGame();
 
 
